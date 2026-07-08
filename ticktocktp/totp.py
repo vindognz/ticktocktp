@@ -12,7 +12,7 @@ def get_code(name: str):
     except KeyError:
         raise ValueError(f"No account found named {name}.")
 
-code, seconds_left = get_code("test")
-print(f"{code} {seconds_left}s left")
-print(store.config_dir())
-print(store.load())
+# code, seconds_left = get_code("test")
+# print(f"{code} {seconds_left}s left")
+# print(store.config_dir())
+# print(store.load())
