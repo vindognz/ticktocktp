@@ -14,6 +14,8 @@ def main():
     add_parser.add_argument("name", help="Account name")
     add_parser.add_argument("secret", help="OTP secret")
 
+    list_parser = subparsers.add_parser("list", help="List the current codes for all accounts")
+
     args = parser.parse_args()
 
     if args.command == "get":
@@ -37,5 +39,11 @@ def main():
         except Exception as ex:
             print("idk how you got here, but heres an error message ig???")
             print(f"ERROR: {ex}")
+    elif args.command == "list":
+        secrets = store.load()
+
+        for name in secrets.keys():
+            code, seconds_left = totp.get_code(name)
+            print(f"{name}: {code} {seconds_left}s left")
 
 main()
