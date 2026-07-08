@@ -17,11 +17,11 @@ def load():
     except FileNotFoundError:
         return {}
 
-def save(secrets):
+def save(secrets: dict):
     with open(config_dir() / "secrets.json", 'w') as f:
         json.dump(secrets, f)
 
-def add_secret(name, secret):
+def add_secret(name: str, secret: str):
     secrets = load()
     secrets[name] = secret
     save(secrets)
