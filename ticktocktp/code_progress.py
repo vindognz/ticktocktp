@@ -5,13 +5,14 @@ class SecondsRemainingColumn(ProgressColumn):
 	def render(self, task):
 		return f"{int(task.completed)}s"
 
-def show_countdown(description, seconds=30):
+def show_countdown(description, progress=0, seconds=30):
 	with Progress(
 		TextColumn("[progress.description]{task.description}"),
 		BarColumn(),
 		SecondsRemainingColumn(),
-	) as progress:
-		task = progress.add_task(description, total=seconds)
-		for remaining in range(seconds, -1, -1):
-			progress.update(task, completed=remaining)
+	) as progress_bar:
+		task = progress_bar.add_task(description, total=seconds)
+		start = seconds - progress
+		for remaining in range(start, -1, -1):
+			progress_bar.update(task, completed=remaining)
 			time.sleep(1)

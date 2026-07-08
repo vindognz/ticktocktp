@@ -1,7 +1,7 @@
 import argparse
 import totp
 import store
-import time
+import code_progress
 
 def main():
     parser = argparse.ArgumentParser(prog="ticktocktp")
@@ -20,10 +20,14 @@ def main():
 
     if args.command == "get":
         try:
-            code, seconds_left = totp.get_code(args.name)
-            print(f"{code} {seconds_left}s left")
-        except ValueError as ex:
-            print(ex)
+            while True:
+                try:
+                    code, seconds_left = totp.get_code(args.name)
+                    code_progress.show_countdown(f"{code}", progress=30-seconds_left)
+                except ValueError as ex:
+                    print(ex)
+        except KeyboardInterrupt:
+            print("Exiting...")
     elif args.command == "add":
         existing = store.load()
         is_update = args.name in existing
